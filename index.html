@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>Dollar Bill Generator</title>
+</head>
+<body>
+<script>
+  function createDollarBill(amount) {
+    const canvas = document.createElement('canvas')
+    canvas.width = 1216
+    canvas.height = 519
+    const context = canvas.getContext('2d')
+    const borderWidth = 1
+    context.fillStyle = 'black'
+    context.fillRect(
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    )
+    context.fillStyle = 'green'
+    context.fillRect(
+      borderWidth,
+      borderWidth,
+      canvas.width - 2 * borderWidth,
+      canvas.height - 2 * borderWidth
+    )
+
+    context.fillStyle = 'white'
+    context.font = '112px sans-serif'
+    const text = `$${amount}`
+    const textMetrics = context.measureText(text)
+    const textHeight = textMetrics.actualBoundingBoxAscent +
+      textMetrics.actualBoundingBoxDescent
+    context.fillText(
+      text,
+      0.5 * (canvas.width - textMetrics.width),
+      0.5 * (canvas.height - textHeight) + textMetrics.actualBoundingBoxAscent
+    )
+
+    return canvas
+  }
+
+  const bill = createDollarBill(1)
+  document.body.appendChild(bill)
+</script>
+</body>
+</html>
